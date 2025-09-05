@@ -1,1 +1,0 @@
-[1m[31mERROR   [0m test_yandex:test_yandex.py:143 Тест упал: Message:
