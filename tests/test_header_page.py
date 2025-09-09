@@ -1,5 +1,5 @@
-import allure
 import pytest
+import allure
 
 from helps.data import Questions, Urls
 from locators.home_page_locators import HomePageLocators
