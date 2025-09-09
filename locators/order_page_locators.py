@@ -1,31 +1,38 @@
 from selenium.webdriver.common.by import By
 
 
-class OrderPageLocators:
-    """Форма заказа самоката"""
-    # Страница 1
-    name_field = (By.XPATH, "//input[@placeholder = '* Имя']")
-    last_name_field = (By.XPATH, "//input[@placeholder = '* Фамилия']")
-    address_field = (By.XPATH, "//input[@placeholder = '* Адрес: куда привезти заказ']")
-    metro_station_field = (By.XPATH, "//input[@placeholder = '* Станция метро']")
-    metro = (By.XPATH, ".//div[text() = 'Парк культуры']")
-    telephone_field = (By.XPATH, "//input[@placeholder = '* Телефон: на него позвонит курьер']")
-    next_button = (By.XPATH, "//button[text() = 'Далее']")
+class ScooterOrderPageLocators:
+ """
+ Локаторы страницы заказа самоката.
+ Включает поля формы, кнопки навигации, выбор параметров и модальные окна подтверждения.
+ """
 
-    # Страница 2
-    deliver_order_field = (By.XPATH, ".//input[@placeholder='* Когда привезти самокат']")
-    rent_period_field = (By.XPATH, ".//span[@class='Dropdown-arrow']")
-    rent_period_three_days = (By.XPATH, ".//div[text() = 'трое суток']")
-    black_color_scooter_check = (By.ID, 'black')
-    gray_color_scooter_check = (By.ID, 'grey')
-    comment_field = (By.XPATH, ".//input[@placeholder= 'Комментарий для курьера']")
-    back_button = (By.XPATH, ".//button[text() = 'Назад']")
-    order_button = (By.XPATH, "(.//button[text() = 'Заказать'])[2]")
+ # === Страница 1: Контактная информация ===
+ NAME_INPUT = (By.XPATH, "//input@placeholder='* Имя'")
+ SURNAME_INPUT = (By.XPATH, "//input@placeholder='* Фамилия'")
+ ADDRESS_INPUT = (By.XPATH, "//input@placeholder='* Адрес: куда привезти заказ'")
+ METRO_INPUT = (By.XPATH, "//input@placeholder='* Станция метро'")
+ METRO_STATION = (By.XPATH, "//divtext()='Парк культуры'")  # Пример выбора
+ PHONE_INPUT = (By.XPATH, "//input@placeholder='* Телефон: на него позвонит курьер'")
+ NEXT_BUTTON = (By.XPATH, "//buttontext()='Далее'")
 
-    # Окно подтверждения заказа
-    no_button = (By.XPATH, ".//button[text() = 'Нет']")
-    yes_button = (By.XPATH, ".//button[text() = 'Да']")
 
-    # Окно заказа
-    order_placed_text = (By.XPATH, ".//div[text() = 'Заказ оформлен']")
-    view_status_button = (By.XPATH, ".//button[text() = 'Посмотреть статус']")
+ # === Страница 2: Параметры заказа ===
+ DELIVERY_DATE_INPUT = (By.XPATH, "//input@placeholder='* Когда привезти самокат'")
+ RENT_PERIOD_DROPDOWN = (By.XPATH, "//spancontains(@class, 'Dropdown-arrow')")
+ RENT_PERIOD_3_DAYS = (By.XPATH, "//divtext()='трое суток'")
+ BLACK_SCOOTER_COLOR_CHECKBOX = (By.ID, "black")
+ GREY_SCOOTER_COLOR_CHECKBOX = (By.ID, "grey")
+ COMMENT_INPUT = (By.XPATH, "//input@placeholder='Комментарий для курьера'")
+ BACK_BUTTON = (By.XPATH, "//buttontext()='Назад'")
+ FINAL_ORDER_BUTTON = (By.XPATH, "(//buttontext()='Заказать')2")  # Кнопка "Заказать" на второй странице
+
+
+ # === Модальное окно: Подтверждение заказа ===
+ CANCEL_CONFIRMATION_BUTTON = (By.XPATH, "//buttontext()='Нет'")
+ ACCEPT_CONFIRMATION_BUTTON = (By.XPATH, "//buttontext()='Да'")
+
+
+ # === Модальное окно: Успешный заказ ===
+ ORDER_SUCCESS_MESSAGE = (By.XPATH, "//divtext()='Заказ оформлен'")
+ VIEW_STATUS_BUTTON = (By.XPATH, "//buttontext()='Посмотреть статус'")

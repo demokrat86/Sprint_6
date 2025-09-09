@@ -1,69 +1,73 @@
-import allure
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
-from locators.home_page_locators import (HomePageHeaderLocators,
-                                         HomePageLocators)
+from locators.home_page_locators import ScooterHomePageLocators, ScooterMainPageLocators
 from pages.base_page import BasePage
 
 
 class HomePageHeader(BasePage):
-    @allure.step('Клик по логотипу Яндекса')
-    def yandex_logo_click(self):
-        self.click_button(HomePageHeaderLocators.logo_yandex)
+    """
+    Page Object: Хедер главной страницы.
+    Содержит методы для взаимодействия с логотипами и кнопками в шапке.
+    """
 
-    @allure.step('Клик по логотипу Самоката')
-    def scooter_logo_click(self):
-        self.click_button(HomePageHeaderLocators.logo_scooter)
+    def click_yandex_logo(self):
+        """Кликаем по логотипу Яндекса"""
+        self.click_element(ScooterHomePageLocators.YANDEX_LOGO)
 
-    @allure.step('Клик по кнопке Заказать')
-    def order_button_click(self):
-        self.click_button(HomePageHeaderLocators.order_button)
+    def click_scooter_logo(self):
+        """Кликаем по логотипу Самоката"""
+        self.click_element(ScooterHomePageLocators.SCOOTER_LOGO)
 
-    @allure.step('Клик по кнопке Статус заказа')
-    def status_order_click(self):
-        self.click_button(HomePageHeaderLocators.order_status_button)
+    def click_top_order_button(self):
+        """Кликаем по верхней кнопке 'Заказать'"""
+        self.click_element(ScooterHomePageLocators.TOP_ORDER_BUTTON)
 
-    @allure.step('Заполнение формы номера заказа')
-    def send_number_order_to_track_field(self, number):
-        self.status_order_click()
-        self.send_keys_to_field(HomePageHeaderLocators.number_order_field, number)
+    def click_order_status_button(self):
+        """Кликаем по кнопке 'Статус заказа'"""
+        self.click_element(ScooterHomePageLocators.ORDER_STATUS_BUTTON)
 
-    @allure.step('Нажатие на кнопку Go!')
-    def go_button_click(self):
-        self.click_button(HomePageHeaderLocators.go_button)
+    def switch_to_new_tab(self):
+        """Переключаемся на новую вкладку"""
+        WebDriverWait(self.driver, 10).until(EC.number_of_windows_to_be(2))
+        self.driver.switch_to.window(self.driver.window_handles[1])
 
-    @allure.step('Заполнение формы номера заказа и клик на кнопку Go!')
-    def check_order_status(self, number):
-        self.status_order_click()
-        self.send_number_order_to_track_field(number)
-        self.go_button_click()
+    def get_current_url(self):
+        """Получаем текущий URL"""
+        return self.driver.current_url
 
-    @allure.step('Проверка отображения надписи - "Учебный проект"')
-    def check_order_title(self):
-        return self.find_and_wait_locator(HomePageHeaderLocators.header_page_title).is_displayed()
+    def check_page_header_is_displayed(self):
+        """Проверяем, что заголовок 'Учебный тренажёр' отображается"""
+        header_locator = (By.XPATH, "//div[contains(@class, 'Home_Header')]//h1[text()='Учебный тренажёр']")
+        return self.is_element_visible(header_locator)
 
 
 class HomePage(BasePage):
+    """
+    Page Object: Главная страница.
+    Содержит методы для работы с куками, скроллом и FAQ.
+    """
 
-    @allure.step('Принять куки')
     def accept_cookie_home_page(self):
-        self.click_button(HomePageLocators.accept_cookies_button)
+        """Принимаем куки"""
+        self.click_element(ScooterMainPageLocators.COOKIE_ACCEPT_BUTTON)
 
-    @allure.step('Скролл и клик на кнопку Заказать')
-    def scroll_and_click_on_the_order_button(self):
-        self.scroll_to_locator(HomePageLocators.order_button)
-        self.click_button(HomePageLocators.order_button)
+    def scroll_and_click_bottom_order_button(self):
+        """Скроллим к нижней кнопке 'Заказать' и кликаем"""
+        self.scroll_to_locator(ScooterHomePageLocators.BOTTOM_ORDER_BUTTON)
+        self.click_element(ScooterHomePageLocators.BOTTOM_ORDER_BUTTON)
 
-    @allure.step('Переход к списку вопросов')
-    def scroll_to_questions(self):
-        self.scroll_to_locator(HomePageLocators.questions_title)
+    def scroll_to_faq_block(self):
+        """Скроллим к блоку 'Вопросы о важном'"""
+        self.scroll_to_locator(ScooterMainPageLocators.FAQ_SECTION)
 
-    @allure.step('Клик на вопрос')
-    def click_question_button(self, question_button_locator):
-        self.scroll_to_questions()
-        self.click_button(question_button_locator)
-
-    @allure.step('Получение текста вопроса')
-    def get_text_question(self, question_button_locator, question_text_locator):
-        self.click_question_button(question_button_locator)
-        text_question = self.get_text_locator(question_text_locator)
-        return text_question
+    def get_answer_text(self, question_locator, answer_locator):
+        """
+        Кликаем по вопросу и получаем текст ответа
+        :param question_locator: локатор вопроса
+        :param answer_locator: локатор панели ответа
+        :return: текст ответа
+        """
+        self.click_element(question_locator)
+        return self.get_text_from_element(answer_locator)

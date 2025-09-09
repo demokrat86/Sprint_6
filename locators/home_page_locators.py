@@ -1,26 +1,38 @@
 from selenium.webdriver.common.by import By
 
-class HomePageHeaderLocators:
-    """Хедер"""
-    logo_yandex = (By.XPATH, ".//a[@class = 'Header_LogoYandex__3TSOI']")
-    logo_scooter = (By.XPATH, ".//a[@class = 'Header_LogoScooter__3lsAR']")
-    order_button = (By.XPATH, "(.//button[text() = 'Заказать'])[1]")
-    order_status_button = (By.XPATH, ".//button[text() = 'Статус заказа']")
-    number_order_field = (By.XPATH, ".//input[@class = 'Input_Input__1iN_Z Header_Input__xIoUq']")
-    go_button = (By.XPATH, ".//button[text() = 'Go!']")
-    track_field = (By.XPATH, ".//input[@placeholder='Введите номер заказа']")
-    view_button = (By.XPATH, ".//button[text() = 'Посмотреть']")
-    header_page_title = (By.XPATH, ".//div[text() = 'Учебный тренажер']")
 
-class HomePageLocators:
-    """Главная страница сервиса"""
-    home_page_title = (By.XPATH, ".//div[@class = 'Home_Header__iJKdX']")
-    order_button = (By.XPATH, "(//button[text() = 'Заказать'])[2]")
-    accept_cookies_button = (By.XPATH, "//button[@id = 'rcc-confirm-button']")
-    questions_title = (By.XPATH, "//div[text() = 'Вопросы о важном']")
+class ScooterHomePageLocators:
+    """
+    Локаторы для хедера и основной страницы сервиса «Самокат за 1 клик».
+    Используются в UI-тестах для взаимодействия с элементами главной страницы.
+    """
 
-    # Локаторы кнопок вопросов
-    questions = [
+    # === Хедер ===
+    YANDEX_LOGO = (By.XPATH, "//a[contains(@class, 'Header_LogoYandex')]")
+    SCOOTER_LOGO = (By.XPATH, "//a[contains(@class, 'Header_LogoScooter')]")
+    TOP_ORDER_BUTTON = (By.XPATH, "(//button[text()='Заказать'])[1]")
+    BOTTOM_ORDER_BUTTON = (By.XPATH, "(//button[text()='Заказать'])[2]")
+    ORDER_STATUS_BUTTON = (By.XPATH, "//button[text()='Статус заказа']")
+    ORDER_NUMBER_INPUT = (By.XPATH, "//input[@placeholder='Введите номер заказа']")
+    GO_BUTTON = (By.XPATH, "//button[text()='Go']")
+    VIEW_STATUS_BUTTON = (By.XPATH, "//button[text()='Посмотреть']")
+    PAGE_HEADER = (By.XPATH, "//div[text()='Учебный тренажер']")
+
+
+class ScooterMainPageLocators:
+    """
+    Локаторы для контентной части главной страницы.
+    Включает заголовок, кнопки, вопросы и ответы из раздела «Вопросы о важном».
+    """
+
+    # === Основные элементы ===
+    MAIN_TITLE = (By.XPATH, "//div[contains(@class, 'Home_Header')]")
+    QUESTIONS_TITLE = (By.XPATH, "//div[text()='Вопросы о важном']")
+    COOKIE_ACCEPT_BUTTON = (By.ID, "rcc-confirm-button")
+
+    # === Вопросы и ответы (FAQ) ===
+    # Заголовки вопросов
+    FAQ_QUESTION_BUTTONS = [
         (By.ID, "accordion__heading-0"),
         (By.ID, "accordion__heading-1"),
         (By.ID, "accordion__heading-2"),
@@ -31,8 +43,8 @@ class HomePageLocators:
         (By.ID, "accordion__heading-7"),
     ]
 
-    # Локаторы текста ответов
-    questions_text = [
+    # Тексты ответов (появляются после клика по вопросу)
+    FAQ_ANSWER_PANELS = [
         (By.ID, "accordion__panel-0"),
         (By.ID, "accordion__panel-1"),
         (By.ID, "accordion__panel-2"),
