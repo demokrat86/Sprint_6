@@ -5,7 +5,6 @@ env/
 .ENV
 
 # Зависимости
-requirements.txt
 pip-selfcheck.json
 
 # Интерпретатор Python
