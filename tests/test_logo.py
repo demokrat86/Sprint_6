@@ -1,6 +1,6 @@
 import allure
 
-from data import Urls
+from urls import Urls
 from pages.main_page import MainPage
 
 
